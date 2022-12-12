@@ -9,20 +9,21 @@ function EthProvider({ children }) {
   const init = useCallback(
     async artifact => {
       if (artifact) {
-        const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+        const web3 = new Web3(window.ethereum || "ws://localhost:8545");
         const accounts = await web3.eth.requestAccounts();
         const networkID = await web3.eth.net.getId();
         const { abi } = artifact;
-        let address, contract;
+        let address, contract, isAdmin;
         try {
           address = artifact.networks[networkID].address;
           contract = new web3.eth.Contract(abi, address);
+          isAdmin = await contract.methods.isAdmin(accounts[0]).call();
         } catch (err) {
           console.error(err);
         }
         dispatch({
           type: actions.init,
-          data: { artifact, web3, accounts, networkID, contract }
+          data: { artifact, web3, accounts, networkID, contract, isAdmin }
         });
       }
     }, []);
@@ -30,8 +31,10 @@ function EthProvider({ children }) {
   useEffect(() => {
     const tryInit = async () => {
       try {
-        const artifact = require("../../contracts/SimpleStorage.json");
+        
+        const artifact = require("../../contracts/PrivilegeCardManager.json");
         init(artifact);
+
       } catch (err) {
         console.error(err);
       }
