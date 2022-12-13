@@ -133,21 +133,7 @@ hr {
   font-size: 1.2rem;
 }
 
-#App .container footer {
-  padding-bottom: 7.5rem;
-}
-
-#App .container footer a {
-  display: inline-block;
-  margin: 2rem 1rem 0 0;
-}
-
 body{
-  margin-top:0;
-}
-
-
-#root{
   margin:0;
 }
 
@@ -159,17 +145,27 @@ body{
   background-size: cover;
 }
 
-.float-child {
-  width: 50%;
-  float: left;
-  padding: 20px;
-  border: 2px solid red;
-} 
+
 
 .wrapper {
-    height: 1000px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 2rem;
-    overflow: auto;
+  height: 1000px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 2rem;
+  overflow: auto;
+}
+
+.testContainer {
+  
+  height: 400px;
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top:536px;
+  border:2px solid white;
+
+
 }

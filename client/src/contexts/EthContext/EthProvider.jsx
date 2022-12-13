@@ -28,12 +28,36 @@ function EthProvider({ children }) {
       }
     }, []);
 
+    const initTravel = useCallback(
+      async artifact => {
+        if (artifact) {
+          const web3 = new Web3(window.ethereum || "ws://localhost:8545");
+          const networkID = await web3.eth.net.getId();
+          const { abi } = artifact;
+          let address, contractTravel;
+          try {
+            address = artifact.networks[networkID].address;
+            contractTravel = new web3.eth.Contract(abi, address);
+    
+          } catch (err) {
+            console.error(err);
+          }
+          dispatch({
+            type: actions.init,
+            data: { contractTravel }
+          });
+        }
+      }, []);
+
   useEffect(() => {
     const tryInit = async () => {
       try {
         
         const artifact = require("../../contracts/PrivilegeCardManager.json");
         init(artifact);
+
+        const artifactTravel = require("../../contracts/TravelManager.json");
+        initTravel(artifactTravel)
 
       } catch (err) {
         console.error(err);

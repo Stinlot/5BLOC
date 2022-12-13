@@ -125,8 +125,8 @@ struct PrivilegeCard {
 
   function sellCard(uint cardId, address seller) public {
       PrivilegeCard memory chosenCard = getCardById(cardId);
-      require(chosenCard.status == STATUS.SELLING,"This card is already for sale.");
-      require(chosenCard.owner != seller,"This is not your card.");
+      //require(chosenCard.status == STATUS.SELLING,"This card is already for sale.");
+      //require(chosenCard.owner != seller,"This is not your card.");
 
   
       chosenCard.status = STATUS.SELLING;
